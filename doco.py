@@ -134,7 +134,6 @@ class Ui_Doco(object):
         icon = QtGui.QIcon('image/doco.ico')
         Doco.setWindowIcon(icon)
         Doco.setStyleSheet('''
-            background: rgba(0, 0, 0, 50%);
             background-image:url(image/skin/1.jpg);
             color:#E8E8E8;
             font-family:黑体;
@@ -148,8 +147,7 @@ class Ui_Doco(object):
     "/home/my_user_name/",
     QtGui.QFileDialog.ShowDirsOnly
     )
-       '''
-
+       '''		
 
         self.trayIcon = QtWidgets.QSystemTrayIcon(Doco)#托盘
         self.trayIcon.setIcon(icon)
@@ -157,7 +155,15 @@ class Ui_Doco(object):
         self.trayIcon.activated.connect(Doco.showNormal)
 
 
-        
+        self.blurWidget = QtWidgets.QListWidget(Doco)
+        self.blurWidget.setGeometry(QtCore.QRect(0, 0, 420, 714))
+        self.blurWidget.setObjectName("blurWidget")
+        self.blurWidget.setStyleSheet('''
+			background:rgba(0, 0, 0, 50%);
+        ''')
+
+
+
         self.horizontalSlider_time = QtWidgets.QSlider(Doco)
         self.horizontalSlider_time.setGeometry(QtCore.QRect(10, 630, 400, 20))
         self.horizontalSlider_time.setOrientation(QtCore.Qt.Horizontal)
@@ -178,6 +184,10 @@ class Ui_Doco(object):
         self.label_name = QtWidgets.QLabel(Doco)
         self.label_name.setGeometry(QtCore.QRect(140, 0, 271, 41))
         self.label_name.setObjectName("label_name")
+        self.label_name.setStyleSheet('''
+            background:transparent;
+            border:none;
+        ''')
 
         self.label_time = QtWidgets.QLabel(Doco)
         self.label_time.setGeometry(QtCore.QRect(315, 615, 95, 21))
@@ -272,7 +282,7 @@ class Ui_Doco(object):
         #self.listWidget.setVisible(False)
         self.listWidget.setStyleSheet('''
         QListWidget{
-        background: rgba(0, 0, 0, 50%);
+        background:transparent;
         border-radius:5px;
         }
         ''')
@@ -522,6 +532,12 @@ class Ui_Doco(object):
             self.animation.setEndValue(QRect(250, 200, 1200,714))
             self.animation.start()
 
+            self.animationx = QPropertyAnimation(self.blurWidget,b'geometry')#form animation
+            self.animationx.setDuration(200)
+            self.animationx.setStartValue(QRect(0, 0, 420,714))
+            self.animationx.setEndValue(QRect(0, 0, 1200,714))
+            self.animationx.start()
+
             self.animation1 = QPropertyAnimation(self.toolButton_close,b'geometry')
             self.animation1.setDuration(500)
             self.animation1.setStartValue(QRect(390, 0, 32, 24))#close animation
@@ -550,6 +566,12 @@ class Ui_Doco(object):
             self.animation.setStartValue(QRect(250, 200, 1200,714))
             self.animation.setEndValue(QRect(250, 200, 420,714))
             self.animation.start()
+
+            self.animationx = QPropertyAnimation(self.blurWidget,b'geometry')
+            self.animationx.setDuration(200)
+            self.animationx.setStartValue(QRect(0, 0, 1200,714))
+            self.animationx.setEndValue(QRect(0, 0, 420,714))
+            self.animationx.start()
 
             self.animation1 = QPropertyAnimation(self.toolButton_close,b'geometry')
             self.animation1.setDuration(800)
@@ -1193,7 +1215,7 @@ class Event():
                    Event.t = Event.t + 1
 
                    self.animation_word = QPropertyAnimation(self.listWidget_word.verticalScrollBar(),b'value')
-                   self.animation_word.setDuration(1000)
+                   self.animation_word.setDuration(200)
                    self.animation_word.setStartValue(Event.y)#min animation
                    self.animation_word.setEndValue(Event.y+50)
                    self.animation_word.start()

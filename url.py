@@ -7,7 +7,7 @@ def getKugou(word):
     srcs = []
     lrcs = []
     imgs = []
-    res = requests.get('http://songsearch.kugou.com/song_search_v2?&keyword='+word+'&pagesize=20')
+    res = requests.get('http://songsearch.kugou.com/song_search_v2?&keyword='+word+'&clientver=&platform=WebFilter')
     jks = json.loads(res.text)
     jks = jks['data']['lists']
     hashs = []
