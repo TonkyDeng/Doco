@@ -103,4 +103,4 @@ ENV/
 # song
 *.mp3
 *.m4a
-*lrc
+*.lrc
